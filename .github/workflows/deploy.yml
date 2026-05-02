@@ -4,7 +4,7 @@ name: Deploy to Biznet Server
 on:
   push:
     branches:
-      - main
+      - master
 
 # Menggunakan Github Container Registry (GHCR) bawaan Github (Gratis)
 env:
