@@ -1,0 +1,109 @@
+version: '3.8'
+
+services:
+  # 1. Frontend (SvelteKit)
+  # Membangun container langsung dari file Dockerfile di folder ini
+  frontend:
+    image: ghcr.io/syamban/erp-bcs:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: erp_frontend
+    ports:
+      - "3000:3000"
+    restart: always
+    environment:
+      - NODE_ENV=production
+      # - PUBLIC_API_URL=http://backend:8080/api # Contoh variabel untuk koneksi ke backend nanti
+    networks:
+      - erp_network
+
+  # 2. Database (Contoh: PostgreSQL, Anda bisa ganti ke MySQL jika tim backend menggunakan MySQL)
+  database:
+    image: postgres:15-alpine
+    container_name: erp_database
+    restart: always
+    environment:
+      POSTGRES_USER: erp_user
+      POSTGRES_PASSWORD: erp_password
+      POSTGRES_DB: erp_main_db
+    ports:
+      - "5432:5432" # Dibuka agar Anda bisa mengecek DB menggunakan DBeaver/TablePlus dari Macbook
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - erp_network
+
+  # 3. Cache & Message Broker (Redis untuk fitur real-time & Telemetri)
+  redis:
+    image: redis:7-alpine
+    container_name: erp_redis
+    restart: always
+    ports:
+      - "6379:6379"
+    networks:
+      - erp_network
+
+  # =========================================================================
+  # BAGIAN DI BAWAH INI ADALAH PLACEHOLDER (KERANGKA) UNTUK TIM BACKEND
+  # Jika tim Backend sudah siap, cukup hapus tanda pagar (#) untuk menyalakannya
+  # =========================================================================
+
+  # 4. Backend Utama (Core ERP)
+  # backend:
+  #   image: image-backend-erp-anda:latest
+  #   container_name: erp_backend
+  #   ports:
+  #     - "8080:8080"
+  #   environment:
+  #     - DB_HOST=database
+  #     - DB_USER=erp_user
+  #     - DB_PASS=erp_password
+  #     - REDIS_HOST=redis
+  #   depends_on:
+  #     - database
+  #     - redis
+  #   networks:
+  #     - erp_network
+
+  # 5. Golang Microservice (FMS Telemetry)
+  # golang-fms:
+  #   image: image-golang-fms-anda:latest
+  #   container_name: erp_golang_fms
+  #   ports:
+  #     - "8081:8081"
+  #   environment:
+  #     - DB_HOST=database
+  #     - REDIS_HOST=redis
+  #   depends_on:
+  #     - database
+  #     - redis
+  #   networks:
+  #     - erp_network
+
+  # 6. Python Microservice (DMS AI Module)
+  # python-ai-dms:
+  #   image: image-python-dms-anda:latest
+  #   container_name: erp_python_dms
+  #   ports:
+  #     - "8000:8000" # Port default FastAPI / Flask
+  #   environment:
+  #     - DB_HOST=database
+  #     - REDIS_HOST=redis
+  #   volumes:
+  #     - dms_documents:/app/uploads
+  #   depends_on:
+  #     - database
+  #     - redis
+  #   networks:
+  #     - erp_network
+
+# Definisi Jaringan Internal (Agar antar container bisa saling memanggil nama)
+networks:
+  erp_network:
+    driver: bridge
+
+# Definisi Storage Permanen (Agar data Database tidak hilang saat Docker dimatikan)
+volumes:
+  db_data:
+  dms_documents:
