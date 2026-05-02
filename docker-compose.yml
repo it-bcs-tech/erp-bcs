@@ -4,7 +4,7 @@ services:
   # 1. Frontend (SvelteKit)
   # Membangun container langsung dari file Dockerfile di folder ini
   frontend:
-    image: ghcr.io/syamban/erp-bcs:latest
+    image: ghcr.io/syamban14/erp-bcs:latest
     build:
       context: .
       dockerfile: Dockerfile
