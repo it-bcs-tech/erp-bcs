@@ -28,7 +28,7 @@ services:
       POSTGRES_PASSWORD: erp_password
       POSTGRES_DB: erp_main_db
     ports:
-      - "5432:5432" # Dibuka agar Anda bisa mengecek DB menggunakan DBeaver/TablePlus dari Macbook
+      - "5433:5432" # Dibuka agar Anda bisa mengecek DB menggunakan DBeaver/TablePlus dari Macbook
     volumes:
       - db_data:/var/lib/postgresql/data
     networks:
