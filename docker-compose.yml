@@ -40,7 +40,7 @@ services:
     container_name: erp_redis
     restart: always
     ports:
-      - "6379:6379"
+      - "6380:6379"
     networks:
       - erp_network
 
