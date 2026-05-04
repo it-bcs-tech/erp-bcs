@@ -107,3 +107,5 @@ networks:
 volumes:
   db_data:
   dms_documents:
+
+# hapus data volumes: docker-compose down -v
