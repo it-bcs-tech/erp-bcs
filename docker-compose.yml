@@ -21,12 +21,12 @@ services:
   # 2. Database (Contoh: PostgreSQL, Anda bisa ganti ke MySQL jika tim backend menggunakan MySQL)
   database:
     image: postgres:15-alpine
-    container_name: erp_database
+    container_name: mybcs_database
     restart: always
     environment:
-      POSTGRES_USER: erp_user
-      POSTGRES_PASSWORD: erp_password
-      POSTGRES_DB: erp_main_db
+      POSTGRES_USER: bcs_admin
+      POSTGRES_PASSWORD: sangatrahasia
+      POSTGRES_DB: mybcs_db
     ports:
       - "5433:5432" # Dibuka agar Anda bisa mengecek DB menggunakan DBeaver/TablePlus dari Macbook
     volumes:
@@ -37,7 +37,7 @@ services:
   # 3. Cache & Message Broker (Redis untuk fitur real-time & Telemetri)
   redis:
     image: redis:7-alpine
-    container_name: erp_redis
+    container_name: mybcs_redis
     restart: always
     ports:
       - "6380:6379"
