@@ -43,7 +43,8 @@ export const actions = {
 			// Jika berhasil, setel cookie auth_token dengan ID pengguna untuk simulasi
 			cookies.set('auth_token', `user_token_${user.id}`, {
 				path: '/',
-				httpOnly: false, // Diset false agar bisa diakses jika diperlukan dari sisi klien (hanya untuk simulasi)
+				httpOnly: false, // Diset false agar bisa diakses jika diperlukan dari sisi klien
+				secure: false,   // PENTING: Harus false jika dites di HTTP tanpa HTTPS
 				maxAge: 60 * 60 * 24 // 1 hari
 			});
 
