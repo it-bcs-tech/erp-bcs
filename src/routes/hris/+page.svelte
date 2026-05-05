@@ -1,5 +1,6 @@
 <script lang="ts">
-	// HRIS Dashboard main metrics and charts data
+	let { data } = $props();
+	const { metrics } = data;
 </script>
 
 <svelte:head>
@@ -20,7 +21,7 @@
 			<span class="font-bold text-on-surface-variant uppercase tracking-widest text-[10px]">Total Employees</span>
 			<span class="material-symbols-outlined text-primary">diversity_3</span>
 		</div>
-		<p class="text-4xl font-black text-on-surface mb-1">1,284</p>
+		<p class="text-4xl font-black text-on-surface mb-1">{metrics.totalEmployees}</p>
 		<div class="flex items-center gap-2">
 			<span class="text-tertiary text-xs font-bold flex items-center">+12%</span>
 			<span class="text-on-surface-variant/60 text-[10px] font-medium">v.s last month</span>
@@ -35,11 +36,11 @@
 				<span class="font-bold text-on-surface-variant uppercase tracking-widest text-[10px]">Present Today</span>
 				<span class="material-symbols-outlined text-tertiary">how_to_reg</span>
 			</div>
-			<p class="text-4xl font-black text-on-surface mb-1">942</p>
+			<p class="text-4xl font-black text-on-surface mb-1">{metrics.presentToday}</p>
 			<div class="w-full bg-surface-container-high h-1.5 rounded-full mt-4 overflow-hidden">
-				<div class="bg-tertiary h-full rounded-full w-[74%] shadow-[0_0_8px_var(--color-tertiary)]"></div>
+				<div class="bg-tertiary h-full rounded-full shadow-[0_0_8px_var(--color-tertiary)]" style="width: {metrics.attendanceCapacity}%"></div>
 			</div>
-			<p class="text-[10px] font-medium text-on-surface-variant mt-2">74% Capacity</p>
+			<p class="text-[10px] font-medium text-on-surface-variant mt-2">{metrics.attendanceCapacity}% Capacity</p>
 		</div>
 	</div>
 
@@ -49,9 +50,9 @@
 			<span class="font-bold text-on-surface-variant uppercase tracking-widest text-[10px]">Leave Requests</span>
 			<span class="material-symbols-outlined text-secondary">pending_actions</span>
 		</div>
-		<p class="text-4xl font-black text-on-surface mb-1">28</p>
+		<p class="text-4xl font-black text-on-surface mb-1">{metrics.totalLeaveRequests}</p>
 		<div class="flex items-center gap-2 mt-2">
-			<span class="px-2 py-0.5 bg-secondary-container text-on-secondary-container text-[10px] font-bold rounded-full">12 Pending</span>
+			<span class="px-2 py-0.5 bg-secondary-container text-on-secondary-container text-[10px] font-bold rounded-full">{metrics.pendingLeaveRequests} Pending</span>
 		</div>
 	</div>
 
@@ -61,9 +62,9 @@
 			<span class="font-bold text-on-surface-variant uppercase tracking-widest text-[10px]">Open Positions</span>
 			<span class="material-symbols-outlined text-primary-container">work_outline</span>
 		</div>
-		<p class="text-4xl font-black text-on-surface mb-1">15</p>
+		<p class="text-4xl font-black text-on-surface mb-1">{metrics.openPositions}</p>
 		<div class="flex items-center gap-2 mt-2">
-			<span class="text-primary text-xs font-bold flex items-center">4 High Priority</span>
+			<span class="text-primary text-xs font-bold flex items-center">{metrics.highPriorityPositions} High Priority</span>
 		</div>
 	</div>
 </div>

@@ -1,10 +1,19 @@
+<script lang="ts">
+	function handleLogout() {
+		// Hapus mock token
+		document.cookie = "auth_token=; path=/; max-age=0";
+		// Arahkan kembali ke halaman login
+		window.location.href = '/login';
+	}
+</script>
+
 <header class="bg-slate-50/70 dark:bg-slate-900/70 backdrop-blur-xl docked full-width top-0 sticky z-50 flex justify-between items-center w-full px-6 py-3">
 	<div class="flex items-center gap-8">
 		<div class="text-xl font-bold text-[#57344f] dark:text-[#d1c3ca]">
 		<img src="https://bcsgroup.co.id/assets/images/uploads/BCS%20Logistics%20HD.png" width="200" alt="" srcset="">
 		</div>
 		<nav class="hidden md:flex items-center gap-6">
-			<a class="text-[#57344f] font-bold border-b-2 border-[#57344f] pb-1 text-sm" href="#">Main Dashboard</a>
+			<a class="text-[#57344f] font-bold border-b-2 border-[#57344f] pb-1 text-sm" href="/">Main Dashboard</a>
 			<a class="text-slate-500 dark:text-slate-400 hover:text-[#57344f] transition-colors text-sm" href="#">System Admin</a>
 			<a class="text-slate-500 dark:text-slate-400 hover:text-[#57344f] transition-colors text-sm" href="#">Reports</a>
 		</nav>
@@ -19,6 +28,9 @@
 		</button>
 		<button class="p-2 text-slate-500 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 rounded-lg transition-all">
 			<span class="material-symbols-outlined">apps</span>
+		</button>
+		<button onclick={handleLogout} title="Logout" class="p-2 text-red-500 hover:bg-red-100/50 dark:hover:bg-red-900/50 rounded-lg transition-all">
+			<span class="material-symbols-outlined">logout</span>
 		</button>
 		<div class="ml-2 w-8 h-8 rounded-full bg-primary-fixed flex items-center justify-center border-2 border-surface-container-highest overflow-hidden">
 			<img alt="User profile" class="w-full h-full object-cover" src="https://ui-avatars.com/api/?name=Architect&background=e9b8d9&color=57344f"/>

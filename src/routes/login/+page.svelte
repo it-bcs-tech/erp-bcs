@@ -1,23 +1,14 @@
 <script lang="ts">
-	// Login state and handlers can be added here later
-	let email = '';
+	import { enhance } from '$app/forms';
+	
+	let { form } = $props();
+
+	// Login state
+	let email = form?.email ?? '';
 	let password = '';
 	let showPassword = false;
 	let isLoading = false;
 	let showSuccess = false;
-
-	function handleLogin() {
-		isLoading = true;
-		// Simulasi proses login
-		setTimeout(() => {
-			isLoading = false;
-			showSuccess = true;
-			// Simulasi redirect ke dashboard
-			setTimeout(() => {
-				window.location.href = '/';
-			}, 1500);
-		}, 1000);
-	}
 </script>
 
 <svelte:head>
@@ -51,15 +42,37 @@
 			</div>
 
 			<!-- Form -->
-			<form class="w-full space-y-5" onsubmit={(e) => { e.preventDefault(); handleLogin(); }}>
+			<form class="w-full space-y-5" method="POST" use:enhance={() => {
+				isLoading = true;
+				return async ({ result, update }) => {
+					isLoading = false;
+					if (result.type === 'success') {
+						showSuccess = true;
+						setTimeout(() => {
+							window.location.href = '/';
+						}, 1500);
+					} else {
+						await update();
+					}
+				};
+			}}>
+				<!-- Error Message -->
+				{#if form?.error}
+					<div class="p-3 bg-error-container text-on-error-container rounded-lg text-sm font-semibold flex items-center gap-2">
+						<span class="material-symbols-outlined text-sm">error</span>
+						{form.error}
+					</div>
+				{/if}
+
 				<div class="space-y-1.5 text-left w-full">
 					<label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider pl-1" for="email">Work Email</label>
 					<input 
 						class="w-full px-4 py-3.5 bg-surface-container-low border-none rounded-xl focus:ring-2 focus:ring-primary-container text-on-surface placeholder:text-outline/50 transition-all text-sm" 
 						id="email" 
+						name="email"
 						placeholder="name@company.com" 
 						type="email"
-						bind:value={email}
+						value={form?.email ?? ''}
 						required
 					/>
 				</div>
@@ -72,9 +85,9 @@
 						<input 
 							class="w-full px-4 py-3.5 bg-surface-container-low border-none rounded-xl focus:ring-2 focus:ring-primary-container text-on-surface placeholder:text-outline/50 transition-all text-sm" 
 							id="password" 
+							name="password"
 							placeholder="••••••••" 
 							type={showPassword ? "text" : "password"}
-							bind:value={password}
 							required
 						/>
 						<button 
