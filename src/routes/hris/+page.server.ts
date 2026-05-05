@@ -1,7 +1,8 @@
 import postgres from 'postgres';
 import type { PageServerLoad } from './$types';
+import { env } from '$env/dynamic/private';
 
-const sql = postgres('postgres://bcs_admin:sangatrahasia@103.31.205.199:5433/mybcs_db');
+const sql = postgres(env.DATABASE_URL || 'postgres://bcs_admin:sangatrahasia@103.31.205.199:5433/mybcs_db');
 
 export const load: PageServerLoad = async () => {
     try {

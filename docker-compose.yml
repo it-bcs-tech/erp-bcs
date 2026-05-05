@@ -14,6 +14,8 @@ services:
     restart: always
     environment:
       - NODE_ENV=production
+      - ORIGIN=http://erp.bcslabs.tech
+      - DATABASE_URL=postgres://bcs_admin:sangatrahasia@database:5432/mybcs_db
       # - PUBLIC_API_URL=http://backend:8080/api # Contoh variabel untuk koneksi ke backend nanti
     networks:
       - erp_network

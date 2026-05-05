@@ -2,9 +2,10 @@ import { fail } from '@sveltejs/kit';
 import type { Actions } from './$types';
 import postgres from 'postgres';
 import bcrypt from 'bcryptjs';
+import { env } from '$env/dynamic/private';
 
-// Menggunakan koneksi database postgres yang diberikan
-const sql = postgres('postgres://bcs_admin:sangatrahasia@103.31.205.199:5433/mybcs_db');
+// Menggunakan koneksi database postgres dari environment variable (lokal vs docker)
+const sql = postgres(env.DATABASE_URL || 'postgres://bcs_admin:sangatrahasia@103.31.205.199:5433/mybcs_db');
 
 export const actions = {
 	default: async ({ request, cookies }) => {
