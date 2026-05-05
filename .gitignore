@@ -23,6 +23,8 @@ Thumbs.db
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
+presensi/
+
 db_test.mjs
 db_test2.mjs
 db_test3.mjs
